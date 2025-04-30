@@ -1,4 +1,5 @@
 # Import python packages
+import requests
 import streamlit as st
 from snowflake.snowpark.functions import col
 
@@ -20,6 +21,10 @@ chosen_ingredients = st.multiselect(
     options=fruit_df,
     max_selections=5,
 )
+
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response.json())
+
 if all([chosen_ingredients, name, st.button('Submit Order')]):
     ingredients = ' '.join(chosen_ingredients)
     statement = f"""
